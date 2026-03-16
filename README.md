@@ -2,7 +2,7 @@
 
 <a href="https://fastgpt.io/"><img src="/.github/imgs/logo.svg" width="120" height="120" alt="fastgpt logo"></a>
 
-# FastGPT
+# FastGPT 
 
 <p align="center">
   <a href="./README_en.md">English</a> |
