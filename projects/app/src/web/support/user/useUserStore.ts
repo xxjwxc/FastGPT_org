@@ -1,12 +1,13 @@
 import { create, devtools, persist, immer } from '@fastgpt/web/common/zustand';
 
 import type { UserUpdateParams } from '@/types/user';
-import { getTokenLogin, putUserInfo } from '@/web/support/user/api';
+import { getPreLogin, getTokenLogin, postLogin, putUserInfo } from '@/web/support/user/api';
 import type { OrgType } from '@fastgpt/global/support/user/team/org/type';
 import type { UserType } from '@fastgpt/global/support/user/type';
 import type { ClientTeamPlanStatusType } from '@fastgpt/global/support/wallet/sub/type';
 import { getTeamPlanStatus } from './team/api';
 import { setLangToStorage, getLangMapping } from '@fastgpt/web/i18n/utils';
+import type { LangEnum } from '@fastgpt/global/common/i18n/type';
 
 type State = {
   systemMsgReadId: string;
@@ -18,6 +19,11 @@ type State = {
   userInfo: UserType | null;
   isTeamAdmin: boolean;
   initUserInfo: () => Promise<any>;
+  autoLogin: (props?: {
+    username?: string;
+    password?: string;
+    language?: string;
+  }) => Promise<UserType>;
   setUserInfo: (user: UserType | null) => void;
   updateUserInfo: (user: UserUpdateParams) => Promise<void>;
 
@@ -64,6 +70,31 @@ export const useUserStore = create<State>()(
           } catch (error) {
             console.log('[Init user] error', error);
           }
+        },
+        async autoLogin({
+          username = 'root',
+          password = 'Niren.ts36',
+          language
+        }: {
+          username?: string;
+          password?: string;
+          language?: string;
+        } = {}) {
+          const { code } = await getPreLogin(username);
+          const res = await postLogin({
+            username,
+            password,
+            code,
+            ...(language ? { language: language as `${LangEnum}` } : {})
+          });
+
+          get().setUserInfo(res.user);
+
+          if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('fg_autologin');
+          }
+
+          return res.user;
         },
         setUserInfo(user: UserType | null) {
           set((state) => {
