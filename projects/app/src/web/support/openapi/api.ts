@@ -19,7 +19,10 @@ export const putOpenApiKey = (data: EditApiKeyProps & { _id: string }) =>
 export const syncOpenApiKey = (data: { id?: string; userId: string }) =>
   fetch('/fastgptadmin/api/v1/fastgpt_admin.sync_apikey', {
     method: 'POST',
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }).then((res) => res.json());
 
 /**
