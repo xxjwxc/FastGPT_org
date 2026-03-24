@@ -13,6 +13,11 @@ export const createAOpenApiKey = (data: EditApiKeyProps) =>
  */
 export const putOpenApiKey = (data: EditApiKeyProps & { _id: string }) =>
   PUT<string>('/support/openapi/update', data);
+/**
+ * sync a api key
+ */
+export const syncOpenApiKey = (data: { appId?: string; userId: string }) =>
+  POST<string>('/fastgptadmin/api/v1/fastgpt_admin.sync_apikey', data);
 
 /**
  * get api keys

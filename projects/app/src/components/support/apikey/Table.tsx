@@ -21,7 +21,8 @@ import {
   getOpenApiKeys,
   createAOpenApiKey,
   delOpenApiById,
-  putOpenApiKey
+  putOpenApiKey,
+  syncOpenApiKey
 } from '@/web/support/openapi/api';
 import type { EditApiKeyProps } from '@/global/support/openapi/api';
 import dayjs from 'dayjs';
@@ -75,6 +76,12 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
   } = useRequest(() => getOpenApiKeys({ appId }), {
     manual: false,
     refreshDeps: [appId]
+  });
+
+  const { runAsync: onclickSynchronization } = useRequest(syncOpenApiKey, {
+    onSuccess() {
+      refetch();
+    }
   });
 
   useEffect(() => {
@@ -163,70 +170,79 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
             </Tr>
           </Thead>
           <Tbody fontSize={'sm'}>
-            {apiKeys.map(({ _id, name, usagePoints, limit, apiKey, createTime, lastUsedTime }) => (
-              <Tr key={_id}>
-                <Td>{name}</Td>
-                <Td>{apiKey}</Td>
-                <Td>
-                  {Math.round(usagePoints)}/
-                  {feConfigs?.isPlus && limit?.maxUsagePoints && limit?.maxUsagePoints > -1
-                    ? `${limit?.maxUsagePoints}`
-                    : t('common:Unlimited')}
-                </Td>
-                {feConfigs?.isPlus && (
-                  <>
-                    <Td whiteSpace={'pre-wrap'}>
-                      {limit?.expiredTime
-                        ? dayjs(limit?.expiredTime).format('YYYY/MM/DD\nHH:mm')
-                        : '-'}
-                    </Td>
-                  </>
-                )}
-                <Td whiteSpace={'pre-wrap'}>{dayjs(createTime).format('YYYY/MM/DD\nHH:mm:ss')}</Td>
-                <Td whiteSpace={'pre-wrap'}>
-                  {lastUsedTime
-                    ? dayjs(lastUsedTime).format('YYYY/MM/DD\nHH:mm:ss')
-                    : t('common:un_used')}
-                </Td>
-                <Td>
-                  <MyMenu
-                    offset={[-50, 5]}
-                    Button={
-                      <IconButton
-                        icon={<MyIcon name={'more'} w={'14px'} />}
-                        name={'more'}
-                        variant={'whitePrimary'}
-                        size={'sm'}
-                        aria-label={''}
-                      />
-                    }
-                    menuList={[
-                      {
-                        children: [
-                          {
-                            label: t('common:Edit'),
-                            icon: 'edit',
-                            onClick: () =>
-                              setEditData({
-                                _id,
-                                name,
-                                limit,
-                                appId
-                              })
-                          },
-                          {
-                            label: t('common:Delete'),
-                            icon: 'delete',
-                            type: 'danger',
-                            onClick: () => openConfirm({ onConfirm: () => onclickRemove(_id) })()
-                          }
-                        ]
+            {apiKeys.map(
+              ({ _id, name, usagePoints, limit, apiKey, createTime, lastUsedTime, appId }) => (
+                <Tr key={_id}>
+                  <Td>{name}</Td>
+                  <Td>{apiKey}</Td>
+                  <Td>
+                    {Math.round(usagePoints)}/
+                    {feConfigs?.isPlus && limit?.maxUsagePoints && limit?.maxUsagePoints > -1
+                      ? `${limit?.maxUsagePoints}`
+                      : t('common:Unlimited')}
+                  </Td>
+                  {feConfigs?.isPlus && (
+                    <>
+                      <Td whiteSpace={'pre-wrap'}>
+                        {limit?.expiredTime
+                          ? dayjs(limit?.expiredTime).format('YYYY/MM/DD\nHH:mm')
+                          : '-'}
+                      </Td>
+                    </>
+                  )}
+                  <Td whiteSpace={'pre-wrap'}>
+                    {dayjs(createTime).format('YYYY/MM/DD\nHH:mm:ss')}
+                  </Td>
+                  <Td whiteSpace={'pre-wrap'}>
+                    {lastUsedTime
+                      ? dayjs(lastUsedTime).format('YYYY/MM/DD\nHH:mm:ss')
+                      : t('common:un_used')}
+                  </Td>
+                  <Td>
+                    <MyMenu
+                      offset={[-50, 5]}
+                      Button={
+                        <IconButton
+                          icon={<MyIcon name={'more'} w={'14px'} />}
+                          name={'more'}
+                          variant={'whitePrimary'}
+                          size={'sm'}
+                          aria-label={''}
+                        />
                       }
-                    ]}
-                  />
-                </Td>
-              </Tr>
-            ))}
+                      menuList={[
+                        {
+                          children: [
+                            {
+                              label: t('common:Edit'),
+                              icon: 'edit',
+                              onClick: () =>
+                                setEditData({
+                                  _id,
+                                  name,
+                                  limit,
+                                  appId
+                                })
+                            },
+                            {
+                              label: t('common:Delete'),
+                              icon: 'delete',
+                              type: 'danger',
+                              onClick: () => openConfirm({ onConfirm: () => onclickRemove(_id) })()
+                            },
+                            {
+                              label: t('common:Synchronization'),
+                              icon: 'sync',
+                              onClick: () => onclickSynchronization({ userId: _id, appId: appId })
+                            }
+                          ]
+                        }
+                      ]}
+                    />
+                  </Td>
+                </Tr>
+              )
+            )}
           </Tbody>
         </Table>
       </TableContainer>
