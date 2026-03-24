@@ -100,7 +100,7 @@ const OutLink = () => {
     // }
   ]);
 
-  const [linkType, setLinkType] = useState<PublishChannelEnum>(PublishChannelEnum.share);
+  const [linkType, setLinkType] = useState<PublishChannelEnum>(PublishChannelEnum.apikey);
 
   return (
     <Box

@@ -80,11 +80,11 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
     refreshDeps: [appId]
   });
 
-  const onclickSynchronization = async (appId?: string) => {
+  const onclickSynchronization = async (_id: string) => {
     console.log(userInfo);
 
     const userId = userInfo?._id || '';
-    await syncOpenApiKey({ userId, appId });
+    await syncOpenApiKey({ userId, id: _id });
   };
 
   useEffect(() => {
@@ -236,7 +236,7 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
                             {
                               label: t('common:Synchronization'),
                               icon: 'sync',
-                              onClick: () => onclickSynchronization(appId)
+                              onClick: () => onclickSynchronization(_id)
                             }
                           ]
                         }
