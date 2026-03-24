@@ -59,7 +59,6 @@ export const useUserStore = create<State>()(
           try {
             const res = await getTokenLogin();
             get().setUserInfo(res);
-
             //设置html的fontsize
             const html = document?.querySelector('html');
             if (html) {

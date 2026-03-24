@@ -40,6 +40,7 @@ import { useConfirm } from '@fastgpt/web/hooks/useConfirm';
 import FormLabel from '@fastgpt/web/components/common/MyBox/FormLabel';
 import QuestionTip from '@fastgpt/web/components/common/MyTooltip/QuestionTip';
 import MyBox from '@fastgpt/web/components/common/MyBox';
+import { useUserStore } from '@/web/support/user/useUserStore';
 
 type EditProps = EditApiKeyProps & { _id?: string };
 const defaultEditData: EditProps = {
@@ -57,6 +58,7 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
   const [baseUrl, setBaseUrl] = useState('https://fastgpt.io/api');
   const [editData, setEditData] = useState<EditProps>();
   const [apiKey, setApiKey] = useState('');
+  const { userInfo } = useUserStore();
 
   const { ConfirmModal, openConfirm } = useConfirm({
     type: 'delete',
@@ -78,11 +80,12 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
     refreshDeps: [appId]
   });
 
-  const { runAsync: onclickSynchronization } = useRequest(syncOpenApiKey, {
-    onSuccess() {
-      refetch();
-    }
-  });
+  const onclickSynchronization = async (appId?: string) => {
+    console.log(userInfo);
+
+    const userId = userInfo?._id || '';
+    await syncOpenApiKey({ userId, appId });
+  };
 
   useEffect(() => {
     setBaseUrl(feConfigs?.customApiDomain || `${location.origin}/api`);
@@ -233,7 +236,7 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
                             {
                               label: t('common:Synchronization'),
                               icon: 'sync',
-                              onClick: () => onclickSynchronization({ userId: _id, appId: appId })
+                              onClick: () => onclickSynchronization(appId)
                             }
                           ]
                         }
