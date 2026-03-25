@@ -176,18 +176,18 @@ const DashboardContainer = ({
               typeId: tag.typeId,
               typeName: t(tag.typeName as any),
               isActive: index === 0 && !currentType
-            })),
-          ...(feConfigs?.appTemplateCourse
-            ? [
-                {
-                  typeId: AppTemplateTypeEnum.contribute,
-                  typeName: t('common:contribute_app_template'),
-                  onClick: () => {
-                    window.open(feConfigs.appTemplateCourse);
-                  }
-                }
-              ]
-            : [])
+            }))
+          // ...(feConfigs?.appTemplateCourse
+          //   ? [
+          //       {
+          //         typeId: AppTemplateTypeEnum.contribute,
+          //         typeName: t('common:contribute_app_template'),
+          //         onClick: () => {
+          //           window.open(feConfigs.appTemplateCourse);
+          //         }
+          //       }
+          //     ]
+          //   : [])
         ]
       },
       {

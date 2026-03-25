@@ -72,12 +72,12 @@ export default async function Layout({
           url: 'https://oss.laf.run/otnvvf-imgs/fastgpt-feishu1.png',
           text: '飞书群'
         },
-        {
-          type: 'icon',
-          icon: <GithubLogoLight className="block dark:hidden size-5" />,
-          url: 'https://github.com/labring/FastGPT',
-          text: 'github'
-        }
+        // {
+        //   type: 'icon',
+        //   icon: <GithubLogoLight className="block dark:hidden size-5" />,
+        //   url: 'https://github.com/labring/FastGPT',
+        //   text: 'github'
+        // }
       ]}
     >
       <SidebarKeepOpen tabUrls={tabUrls} />
