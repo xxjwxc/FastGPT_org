@@ -169,7 +169,7 @@ const ToolKitProvider = ({ MenuIcon }: { MenuIcon: JSX.Element }) => {
               >
                 {t('app:core.module.template.System Tools')}
               </Box>
-              {feConfigs?.docUrl && (
+              {/* {feConfigs?.docUrl && (
                 <Button
                   mr={4}
                   onClick={() =>
@@ -181,7 +181,7 @@ const ToolKitProvider = ({ MenuIcon }: { MenuIcon: JSX.Element }) => {
                 >
                   {t('app:toolkit_contribute_resource')}
                 </Button>
-              )}
+              )} */}
               {feConfigs?.submitPluginRequestUrl && (
                 <Button
                   variant={'whiteBase'}

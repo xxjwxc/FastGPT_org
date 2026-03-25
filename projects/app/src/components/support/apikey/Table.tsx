@@ -105,7 +105,7 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
             <Box color={'myGray.900'} fontSize={'lg'}>
               {t('common:support.openapi.Api manager')}
             </Box>
-            {feConfigs?.docUrl && (
+            {/* {feConfigs?.docUrl && (
               <Link
                 href={feConfigs.openAPIDocUrl || getDocPath('/docs/openapi/intro')}
                 target={'_blank'}
@@ -115,7 +115,7 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
               >
                 {t('common:read_doc')}
               </Link>
-            )}
+            )} */}
           </Flex>
           <Box fontSize={'mini'} color={'myGray.600'}>
             {tips}

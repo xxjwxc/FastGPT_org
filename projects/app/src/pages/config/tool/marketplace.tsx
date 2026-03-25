@@ -455,7 +455,7 @@ const ToolkitMarketplace = ({ marketplaceUrl }: { marketplaceUrl: string }) => {
                   {t('app:toolkit_updatable')} ({updatableTools.length})
                 </Button>
               )}
-              {feConfigs?.docUrl && (
+              {/* {feConfigs?.docUrl && (
                 <Button
                   onClick={() => {
                     const url = getDocPath('/docs/introduction/guide/plugins/dev_system_tool');
@@ -466,7 +466,7 @@ const ToolkitMarketplace = ({ marketplaceUrl }: { marketplaceUrl: string }) => {
                 >
                   {t('app:toolkit_contribute_resource')}
                 </Button>
-              )}
+              )} */}
               {feConfigs?.submitPluginRequestUrl && (
                 <Button
                   variant={'whiteBase'}

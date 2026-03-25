@@ -236,7 +236,7 @@ const ToolkitMarketplace = () => {
         isLoading={loadingTools && displayTools.length === 0}
       >
         <Box px={8} flexShrink={0} position={'relative'}>
-          <Flex gap={3} position={'absolute'} right={8} top={6} alignItems={'center'}>
+          {/* <Flex gap={3} position={'absolute'} right={8} top={6} alignItems={'center'}>
             <I18nLngSelector />
             <Button
               onClick={() => {
@@ -256,7 +256,7 @@ const ToolkitMarketplace = () => {
             >
               {t('app:toolkit_marketplace_submit_request')}
             </Button>
-          </Flex>
+          </Flex> */}
 
           <Box
             zIndex={100}

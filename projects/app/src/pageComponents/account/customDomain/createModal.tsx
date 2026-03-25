@@ -291,7 +291,7 @@ function CreateCustomDomainModal<T extends 'create' | 'refresh'>({
             </Tbody>
           </Table>
 
-          <Link
+          {/* <Link
             href={
               feConfigs.openAPIDocUrl ||
               getDocPath('/docs/introduction/guide/team_permissions/customDomain')
@@ -306,7 +306,7 @@ function CreateCustomDomainModal<T extends 'create' | 'refresh'>({
               <Icon w={'17px'} h={'17px'} name="book" mr="1" />
               {t('common:read_doc')}
             </Flex>
-          </Link>
+          </Link> */}
         </Flex>
       </ModalBody>
       <ModalFooter>
